@@ -2,6 +2,16 @@
 ### Important Note: This resource type will not work as expected until Staging/Development are updated to the latest version of identity.
 The provider can interact with the Identity API to create and manage Identity accounts. The Player Provider can then be used to create Player users corresponding to these accounts.
 
+The following environment variables need to be set:
+```
+TF_USERNAME=<your username>
+TF_PASSWORD=<your password>
+TF_ID_TOK_URL=<the url where you get your identity auth token>
+TF_ID_CLIENT_ID=<your client ID for authenticating with the Identity API>
+TF_CLIENT_SECRET=<your client secret for authentication>
+TF_ID_API_URL=<the url of the identity api>
+```
+
 There are some differences to note between this type and other resource types. Identity accounts cannot be truly deleted. A `terraform destroy` will simply deactivate the targeted account. The only fields that can be truly updated (ie updated without creating anything new) are an account's role and a property's value. The key of a property can be updated, but doing so requires creating a new property. This is handled automatically by the provider.
 
 ### Properties
