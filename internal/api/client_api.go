@@ -165,6 +165,7 @@ func ReadClient(id string, m map[string]string) (*structs.Client, error) {
 	client := &structs.Client{
 		ID:     body["id"].(float64),
 		Name:   body["name"].(string),
+		DisplayName: body["displayName"].(string),
 		Scopes: body["scopes"].(string),
 		Grants: body["grants"].(string),
 	}
