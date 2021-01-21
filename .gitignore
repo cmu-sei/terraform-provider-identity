@@ -1,3 +1,10 @@
 go.mod
 go.sum
 *.http
+.terraform.tfstate.lock.info
+main.tf
+.gitignore
+terraform.tfstate
+terraform-provider-identity.exe
+terraform.tfstate.backup
+.terraform/plugins/windows_amd64/lock.json

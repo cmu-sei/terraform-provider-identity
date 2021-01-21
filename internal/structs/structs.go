@@ -46,6 +46,7 @@ func PropertyFromMap(asMap map[string]interface{}) *Property {
 type Client struct {
 	ID     float64
 	Name   string
+	DisplayName string
 	Scopes string
 	Grants string
 	// These lifetimes are not set (for now) but are required for the API to work
@@ -67,9 +68,10 @@ type Client struct {
 }
 
 // NewClient returns a new instance of a client with default values set
-func NewClient(name, scopes, grants string) Client {
+func NewClient(name, displayName, scopes, grants string) Client {
 	ret := Client{}
 	ret.Name = name
+	ret.DisplayName = displayName
 	ret.Scopes = scopes
 	ret.Grants = grants
 	// Set up default values for lifetimes

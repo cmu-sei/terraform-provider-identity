@@ -12,6 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
+// Display name property?
 func identityClient() *schema.Resource {
 	return &schema.Resource{
 		Create: identityClientCreate,
@@ -23,6 +24,11 @@ func identityClient() *schema.Resource {
 			"name": {
 				Type:     schema.TypeString,
 				Required: true,
+			},
+			"display_name": {
+				Type: schema.TypeString,
+				Optional: true,
+				Default: "",
 			},
 			"scopes": {
 				Type:     schema.TypeString,
@@ -121,7 +127,11 @@ func identityClient() *schema.Resource {
 }
 
 func identityClientCreate(d *schema.ResourceData, m interface{}) error {
-	client := structs.NewClient(d.Get("name").(string), d.Get("scopes").(string), d.Get("grants").(string))
+	displName := d.Get("display_name")
+	if displName == "" {
+		displName = d.Get("name")
+	}
+	client := structs.NewClient(d.Get("name").(string), displName.(string), d.Get("scopes").(string), d.Get("grants").(string))
 
 	casted := m.(map[string]string)
 	id, err := api.CreateClient(&client, casted)
@@ -295,7 +305,11 @@ func identityClientUpdate(d *schema.ResourceData, m interface{}) error {
 	// Can set deleted even for a secret but value of secret is immutable
 
 	// Build client object to pass to API
-	client := structs.NewClient(d.Get("name").(string), d.Get("scopes").(string), d.Get("grants").(string))
+	displName := d.Get("display_name")
+	if displName == "" {
+		displName = d.Get("name")
+	}
+	client := structs.NewClient(d.Get("name").(string), displName.(string), d.Get("scopes").(string), d.Get("grants").(string))
 	client.ID, _ = strconv.ParseFloat(d.Id(), 64)
 
 	urlOld, urlNew := d.GetChange("url")
