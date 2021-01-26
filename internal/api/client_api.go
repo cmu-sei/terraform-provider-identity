@@ -90,10 +90,6 @@ func UpdateClient(client *structs.Client, m map[string]string) error {
 		return err
 	}
 
-	temp := new(map[string]interface{})
-	json.Unmarshal(asJSON, temp)
-	log.Printf("! Unmarhsaled JSON: %+v", temp)
-
 	request.Header.Add("Authorization", "Bearer "+auth)
 	request.Header.Set("Content-Type", "application/json")
 	APIClient := &http.Client{}
