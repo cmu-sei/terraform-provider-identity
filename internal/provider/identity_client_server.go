@@ -28,7 +28,6 @@ func identityClient() *schema.Resource {
 			"display_name": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
 			},
 			"enabled": {
 				Type:     schema.TypeBool,
@@ -108,7 +107,7 @@ func identityClient() *schema.Resource {
 			},
 			"secret": {
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": {
