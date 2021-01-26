@@ -169,6 +169,7 @@ func ReadClient(id string, m map[string]string) (*structs.Client, error) {
 		DisplayName: body["displayName"].(string),
 		Scopes:      body["scopes"].(string),
 		Grants:      body["grants"].(string),
+		Enabled:     body["enabled"].(bool),
 	}
 
 	// TODO this can probably be refactored and combined with the function to read nested IDs
