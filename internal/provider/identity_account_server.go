@@ -326,4 +326,3 @@ func createProperties(props *[]interface{}, d *schema.ResourceData, m map[string
 
 	return d.Set("property", localMaps)
 }
-

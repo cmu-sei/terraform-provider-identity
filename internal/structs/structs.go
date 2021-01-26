@@ -46,7 +46,7 @@ func PropertyFromMap(asMap map[string]interface{}) *Property {
 type Client struct {
 	ID     float64
 	Name   string
-	DisplayName string
+	DisplayName string `json:"displayName"`
 	Scopes string
 	Grants string
 	// These lifetimes are not set (for now) but are required for the API to work

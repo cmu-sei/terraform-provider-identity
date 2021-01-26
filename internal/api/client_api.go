@@ -89,6 +89,11 @@ func UpdateClient(client *structs.Client, m map[string]string) error {
 	if err != nil {
 		return err
 	}
+
+	temp := new(map[string]interface{})
+	json.Unmarshal(asJSON, temp)
+	log.Printf("! Unmarhsaled JSON: %+v", temp)
+
 	request.Header.Add("Authorization", "Bearer "+auth)
 	request.Header.Set("Content-Type", "application/json")
 	APIClient := &http.Client{}
@@ -163,11 +168,11 @@ func ReadClient(id string, m map[string]string) (*structs.Client, error) {
 
 	// Get top level fields
 	client := &structs.Client{
-		ID:     body["id"].(float64),
-		Name:   body["name"].(string),
+		ID:          body["id"].(float64),
+		Name:        body["name"].(string),
 		DisplayName: body["displayName"].(string),
-		Scopes: body["scopes"].(string),
-		Grants: body["grants"].(string),
+		Scopes:      body["scopes"].(string),
+		Grants:      body["grants"].(string),
 	}
 
 	// TODO this can probably be refactored and combined with the function to read nested IDs
@@ -413,4 +418,3 @@ func readNestedIDs(client *structs.Client, resp *http.Response) error {
 
 	return nil
 }
-

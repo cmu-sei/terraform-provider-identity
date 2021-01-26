@@ -8,3 +8,4 @@ terraform.tfstate
 terraform-provider-identity.exe
 terraform.tfstate.backup
 .terraform/plugins/windows_amd64/lock.json
+out.log
