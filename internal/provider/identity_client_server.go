@@ -30,6 +30,11 @@ func identityClient() *schema.Resource {
 				Optional: true,
 				Default:  "",
 			},
+			"enabled": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  true,
+			},
 			"scopes": {
 				Type:     schema.TypeString,
 				Required: true,
@@ -131,7 +136,7 @@ func identityClientCreate(d *schema.ResourceData, m interface{}) error {
 	if displName == "" {
 		displName = d.Get("name")
 	}
-	client := structs.NewClient(d.Get("name").(string), displName.(string), d.Get("scopes").(string), d.Get("grants").(string))
+	client := structs.NewClient(d.Get("name").(string), displName.(string), d.Get("scopes").(string), d.Get("grants").(string), d.Get("enabled").(bool))
 
 	casted := m.(map[string]string)
 	id, err := api.CreateClient(&client, casted)
@@ -309,7 +314,7 @@ func identityClientUpdate(d *schema.ResourceData, m interface{}) error {
 	if displName == "" {
 		displName = d.Get("name")
 	}
-	client := structs.NewClient(d.Get("name").(string), displName.(string), d.Get("scopes").(string), d.Get("grants").(string))
+	client := structs.NewClient(d.Get("name").(string), displName.(string), d.Get("scopes").(string), d.Get("grants").(string), d.Get("enabled").(bool))
 	client.ID, _ = strconv.ParseFloat(d.Id(), 64)
 
 	urlOld, urlNew := d.GetChange("url")

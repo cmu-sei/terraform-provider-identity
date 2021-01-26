@@ -44,11 +44,12 @@ func PropertyFromMap(asMap map[string]interface{}) *Property {
 
 // Client holds information on an indentity client
 type Client struct {
-	ID     float64
-	Name   string
+	ID          float64
+	Name        string
 	DisplayName string `json:"displayName"`
-	Scopes string
-	Grants string
+	Scopes      string
+	Grants      string
+	Enabled     bool
 	// These lifetimes are not set (for now) but are required for the API to work
 	// These fields need to be exported for json.marshal to work
 
@@ -68,10 +69,11 @@ type Client struct {
 }
 
 // NewClient returns a new instance of a client with default values set
-func NewClient(name, displayName, scopes, grants string) Client {
+func NewClient(name, displayName, scopes, grants string, enabled bool) Client {
 	ret := Client{}
 	ret.Name = name
 	ret.DisplayName = displayName
+	ret.Enabled = enabled
 	ret.Scopes = scopes
 	ret.Grants = grants
 	// Set up default values for lifetimes
@@ -230,4 +232,3 @@ func (secret Secret) AsMap() map[string]interface{} {
 		"deleted": secret.Deleted,
 	}
 }
-
