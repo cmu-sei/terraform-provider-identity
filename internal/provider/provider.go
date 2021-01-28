@@ -86,4 +86,3 @@ func config(r *schema.ResourceData) (interface{}, error) {
 	m["id_api_url"] = idAPI.(string)
 	return m, nil
 }
-

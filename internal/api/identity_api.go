@@ -398,4 +398,3 @@ func getAccount(term string, m map[string]string) (*http.Response, error) {
 	log.Printf("! returning from getAccount with response = %+v", response)
 	return response, nil
 }
-
