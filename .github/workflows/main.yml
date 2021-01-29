@@ -23,43 +23,43 @@ jobs:
       run: |
         go mod init identity_provider
         cd cmd
-        GOOS=linux GOARCH=386 go build -o ../terraform-provider-identity-${{ github.event.release.tag_name }}_linux_386
-        GOOS=linux GOARCH=amd64 go build -o ../terraform-provider-identity-${{ github.event.release.tag_name }}_linux_amd64
-        GOOS=darwin GOARCH=amd64 go build -o ../terraform-provider-identity-${{ github.event.release.tag_name }}_darwin_amd64
-        GOOS=windows GOARCH=386 go build -o ../terraform-provider-identity-${{ github.event.release.tag_name }}_windows_386.exe
-        GOOS=windows GOARCH=amd64 go build -o ../terraform-provider-identity-${{ github.event.release.tag_name }}_windows_amd64.exe
+        GOOS=linux GOARCH=386 go build -o ../terraform-provider-identity_${{ github.event.release.tag_name }}_linux_386
+        GOOS=linux GOARCH=amd64 go build -o ../terraform-provider-identity_${{ github.event.release.tag_name }}_linux_amd64
+        GOOS=darwin GOARCH=amd64 go build -o ../terraform-provider-identity_${{ github.event.release.tag_name }}_darwin_amd64
+        GOOS=windows GOARCH=386 go build -o ../terraform-provider-identity_${{ github.event.release.tag_name }}_windows_386.exe
+        GOOS=windows GOARCH=amd64 go build -o ../terraform-provider-identity_${{ github.event.release.tag_name }}_windows_amd64.exe
         
     - name: Upload to release
       uses: JasonEtco/upload-to-release@master
       with:
-        args: terraform-provider-identity-${{ github.event.release.tag_name }}_linux_386 application/octet-stream
+        args: terraform-provider-identity_${{ github.event.release.tag_name }}_linux_386 application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload to release
       uses: JasonEtco/upload-to-release@master
       with:
-        args: terraform-provider-identity-${{ github.event.release.tag_name }}_linux_amd64 application/octet-stream
+        args: terraform-provider-identity_${{ github.event.release.tag_name }}_linux_amd64 application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload to release
       uses: JasonEtco/upload-to-release@master
       with:
-        args: terraform-provider-identity-${{ github.event.release.tag_name }}_darwin_amd64 application/octet-stream
+        args: terraform-provider-identity_${{ github.event.release.tag_name }}_darwin_amd64 application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload to release
       uses: JasonEtco/upload-to-release@master
       with:
-        args: terraform-provider-identity-${{ github.event.release.tag_name }}_windows_386.exe application/octet-stream
+        args: terraform-provider-identity_${{ github.event.release.tag_name }}_windows_386.exe application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload to release
       uses: JasonEtco/upload-to-release@master
       with:
-        args: terraform-provider-identity-${{ github.event.release.tag_name }}_windows_amd64.exe application/octet-stream
+        args: terraform-provider-identity_${{ github.event.release.tag_name }}_windows_amd64.exe application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
