@@ -100,8 +100,7 @@ The client needs one each of a redirectUri, corsUri, and postLogoutRedirectUri. 
 - client_id: The id of the client that this claim is attached to. Computed.
 - deleted: Whether this claim should be deleted. Option. Default = false
 
-#### Secrets
-Note that at least one secret is required, although it can be empty.
+#### Secrets (optional)
 - id: The id of the secret. Computed.
 - value: The secret value. Computed.
 - deleted: Whether this secret should be deleted. Optional. Default = false
