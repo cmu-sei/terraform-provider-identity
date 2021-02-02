@@ -185,7 +185,6 @@ func identityClientCreate(d *schema.ResourceData, m interface{}) error {
 	secretList := d.Get("secret").([]interface{})
 
 	for _, sec := range secretList {
-		log.Printf("! In secrets for loop")
 		asMap := sec.(map[string]interface{})
 		secrets = append(secrets, structs.SecretFromMap(asMap))
 	}
