@@ -1,12 +1,12 @@
 ## Identity Provider
 The following environment variables need to be set:
 ```
-TF_USERNAME=<your username>
-TF_PASSWORD=<your password>
-TF_ID_TOK_URL=<the url where you get your identity auth token>
-TF_ID_CLIENT_ID=<your client ID for authenticating with the Identity API>
-TF_CLIENT_SECRET=<your client secret for authentication>
-TF_ID_API_URL=<the url of the identity api>
+SEI_IDENTITY_USERNAME=<your username>
+SEI_IDENTITY_PASSWORD=<your password>
+SEI_IDENTITY_TOK_URL=<the url where you get your identity auth token>
+SEI_IDENTITY_CLIENT_ID=<your client ID for authenticating with the Identity API>
+SEI_IDENTITY_CLIENT_SECRET=<your client secret for authentication>
+SEI_IDENTITY_API_URL=<the url of the identity api>
 ```
 
 ### Identity Accounts

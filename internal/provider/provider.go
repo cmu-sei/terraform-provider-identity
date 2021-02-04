@@ -20,42 +20,42 @@ func Provider() *schema.Provider {
 				Type:     schema.TypeString,
 				Required: true,
 				DefaultFunc: func() (interface{}, error) {
-					return os.Getenv("TF_USERNAME"), nil
+					return os.Getenv("SEI_IDENTITY_USERNAME"), nil
 				},
 			},
 			"password": {
 				Type:     schema.TypeString,
 				Required: true,
 				DefaultFunc: func() (interface{}, error) {
-					return os.Getenv("TF_PASSWORD"), nil
+					return os.Getenv("SEI_IDENTITY_PASSWORD"), nil
 				},
 			},
 			"id_token_url": {
 				Type:     schema.TypeString,
 				Required: true,
 				DefaultFunc: func() (interface{}, error) {
-					return os.Getenv("TF_ID_TOK_URL"), nil
+					return os.Getenv("SEI_IDENTITY_TOK_URL"), nil
 				},
 			},
 			"client_id": {
 				Type:     schema.TypeString,
 				Required: true,
 				DefaultFunc: func() (interface{}, error) {
-					return os.Getenv("TF_ID_CLIENT_ID"), nil
+					return os.Getenv("SEI_IDENTITY_CLIENT_ID"), nil
 				},
 			},
 			"client_secret": {
 				Type:     schema.TypeString,
 				Required: true,
 				DefaultFunc: func() (interface{}, error) {
-					return os.Getenv("TF_CLIENT_SECRET"), nil
+					return os.Getenv("SEI_IDENTITY_CLIENT_SECRET"), nil
 				},
 			},
 			"id_api_url": {
 				Type:     schema.TypeString,
 				Required: true,
 				DefaultFunc: func() (interface{}, error) {
-					return os.Getenv("TF_ID_API_URL"), nil
+					return os.Getenv("SEI_IDENTITY_API_URL"), nil
 				},
 			},
 		},
