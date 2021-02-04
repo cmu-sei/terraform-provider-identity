@@ -107,7 +107,7 @@ func identityClient() *schema.Resource {
 			},
 			"secret": {
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": {
@@ -179,14 +179,17 @@ func identityClientCreate(d *schema.ResourceData, m interface{}) error {
 	client.Claims = *claims
 
 	// handle secrets
-	secrets := new([]structs.Secret)
+	// Use make instead of new here because the zero value for a slice allocated using new is nil which will cause errors
+	// when calling the API. Zero value when using make is an empty slice, which handles the case of no secrets being supplied
+	secrets := make([]structs.Secret, 0)
 	secretList := d.Get("secret").([]interface{})
 
 	for _, sec := range secretList {
 		asMap := sec.(map[string]interface{})
-		*secrets = append(*secrets, structs.SecretFromMap(asMap))
+		secrets = append(secrets, structs.SecretFromMap(asMap))
 	}
-	client.Secrets = *secrets
+
+	client.Secrets = secrets
 
 	client.Managers = []interface{}{}
 
