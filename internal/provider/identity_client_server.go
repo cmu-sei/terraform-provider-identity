@@ -489,8 +489,11 @@ func identityClientUpdate(d *schema.ResourceData, m interface{}) error {
 	log.Printf("! Secrets to create: %v", toCreateSecret)
 
 	secrets := append(*toDeleteSecret, *toCreateSecret...)
-	// If there was no change in the secrets, we need to set the secrets field to the old value to avoid a 400 error
-	if len(secrets) == 0 {
+	// If nil, set to empty array to avoid API error
+	if secrets == nil {
+		client.Secrets = make([]structs.Secret, 0)
+	} else if len(secrets) == 0 {
+		// If there was no change in the secrets, we need to set the secrets field to the old value to avoid a 400 error
 		client.Secrets = *oldSec
 	} else {
 		client.Secrets = secrets
