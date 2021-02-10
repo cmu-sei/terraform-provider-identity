@@ -94,7 +94,7 @@ The client needs one each of a redirectUri, corsUri, and postLogoutRedirectUri. 
 - client_id: The id of the client this URL is attached to. Computed.
 - deleted: Whether this URL should be deleted. Optional. Default = false.
 
-#### Claims
+#### Claims (optional)
 - id: The id of this claim. Computed
 - value: The value for the claim. Required.
 - client_id: The id of the client that this claim is attached to. Computed.

@@ -12,7 +12,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// Display name property?
 func identityClient() *schema.Resource {
 	return &schema.Resource{
 		Create: identityClientCreate,
@@ -82,7 +81,7 @@ func identityClient() *schema.Resource {
 			// Default values for these blocks may need to be revisited
 			"claim": {
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": {
@@ -167,16 +166,16 @@ func identityClientCreate(d *schema.ResourceData, m interface{}) error {
 	client.PostLogoutURLs = *postlogout
 
 	// handle claims
-	claims := new([]structs.Claim)
+	claims := make([]structs.Claim, 0)
 	claimList := d.Get("claim").([]interface{})
 
 	for _, claim := range claimList {
 		asMap := claim.(map[string]interface{})
 		claimObj := structs.ClaimFromMap(asMap)
 		claimObj.ClientID, _ = strconv.Atoi(id)
-		*claims = append(*claims, claimObj)
+		claims = append(claims, claimObj)
 	}
-	client.Claims = *claims
+	client.Claims = claims
 
 	// handle secrets
 	// Use make instead of new here because the zero value for a slice allocated using new is nil which will cause errors
@@ -429,8 +428,17 @@ func identityClientUpdate(d *schema.ResourceData, m interface{}) error {
 	log.Printf("! Claims to update: %+v", toUpdateClaim)
 
 	claims := append(*toDeleteClaim, *toUpdateClaim...)
-	client.Claims = claims
 
+	// Handle the case where no claims are present
+	if claims == nil {
+		client.Claims = make([]structs.Claim, 0)
+	} else {
+		// Set client id in claims
+		for _, claim := range claims {
+			claim.ClientID, _ = strconv.Atoi(d.Id())
+		}
+		client.Claims = claims
+	}
 	// Handle secrets
 	secOld, secNew := d.GetChange("secret")
 	oldSecTemp := secOld.([]interface{})
@@ -481,8 +489,11 @@ func identityClientUpdate(d *schema.ResourceData, m interface{}) error {
 	log.Printf("! Secrets to create: %v", toCreateSecret)
 
 	secrets := append(*toDeleteSecret, *toCreateSecret...)
-	// If there was no change in the secrets, we need to set the secrets field to the old value to avoid a 400 error
-	if len(secrets) == 0 {
+	// If nil, set to empty array to avoid API error
+	if secrets == nil {
+		client.Secrets = make([]structs.Secret, 0)
+	} else if len(secrets) == 0 {
+		// If there was no change in the secrets, we need to set the secrets field to the old value to avoid a 400 error
 		client.Secrets = *oldSec
 	} else {
 		client.Secrets = secrets
@@ -490,8 +501,8 @@ func identityClientUpdate(d *schema.ResourceData, m interface{}) error {
 	log.Printf("! secrets appended together: %+v", secrets)
 
 	// Ensure no URL types or claims are gone completely
-	if len(client.RedirectURLs) == 0 || len(client.CorsURLs) == 0 || len(client.PostLogoutURLs) == 0 || len(client.Claims) == 0 {
-		return fmt.Errorf("there must be at least one of each URL type and a claim")
+	if len(client.RedirectURLs) == 0 || len(client.CorsURLs) == 0 || len(client.PostLogoutURLs) == 0 {
+		return fmt.Errorf("there must be at least one of each URL type")
 	}
 
 	log.Printf("! Calling update with payload %+v", client)
