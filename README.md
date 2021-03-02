@@ -1,4 +1,4 @@
-# Terraform.Provider.Identity Readme
+# Terraform Provider Identity Readme
 
 ## Identity Provider
 
